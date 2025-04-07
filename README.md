@@ -1,30 +1,21 @@
-# Blink Starter for Solana
+# Lulo Withdraw Blink for Solana
 
-Blink scaffold Solana acts as a downloadable and reusable template that utilizes NextJS and Tailwind as the front end framework plus API routes for the backend. It comes with all necessary dependencies and configuration out of the box, so that you can immediately start building.
+This repository contains a Lulo Withdraw Blink built on Solana. It serves as a practical example of creating a withdrawal functionality for Lulo using the Blink SDKs. 
 
-The blink in the starter template showcases a simple donation application that allows users to send SOL (Solana's native currency) to a specified wallet address.
+It is part of the "Powered by Dialect" series, showcasing how to implement specific functionalities using Dialect's Blink SDKs.
 
-![Blink Scaffold Solana](public/blink-solana-scaffold.png)
+## Guides & Resources 🔥🔥🔥
 
-## Guide 🔥🔥🔥
+Learn how to build this Lulo Withdraw Blink from scratch with our comprehensive tutorial:
+**TBD** (Tutorial coming soon to the Dialect documentation)
 
-Learn how to build this Blink from scratch with our extensive guide:
-https://docs.dialect.to/blinks/blinks-provider/build-your-first-blink
+Explore our [Blink documentation](https://docs.dialect.to/blinks/blinks-provider/guides) for:
+- Step-by-step tutorials
+- Advanced integration techniques
+- Best practices for Solana development
+- Example projects and use cases
 
-## Prerequisites
-
-- Node.js 18+
-- npm, yarn, pnpm, or bun
-- A wallet with some devnet SOL (if you want to test the blink)
-
-## Features
-
-- Nextjs React framework
-- Tailwind
-- Blink SDK
-- Solana Web3.js
-- Dark/Light Mode
-- Solana Wallet Adapter
+Join our [Discord community](https://discord.gg/saydialect) to connect with other developers building with Dialect!
 
 ## Getting Started
 
