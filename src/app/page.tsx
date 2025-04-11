@@ -29,7 +29,7 @@ const steps = [
 ];
 
 export default function Home() {
-  const blinkApiUrl = "http://localhost:3000/api/actions/withdraw/usdc";
+  const blinkApiUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/api/actions/withdraw/usdc`;
 
   // Adapter, used to connect to the wallet
   const { adapter } = useBlinkSolanaWalletAdapter(
