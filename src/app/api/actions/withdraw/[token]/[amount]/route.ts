@@ -18,16 +18,21 @@ const headers = {
 };
 
 // OPTIONS request
-export const OPTIONS = async (request: Request) => {
+export const OPTIONS = async () => {
     return new Response(null, { headers });
 };
 
-// POST request14
-export const POST = async (req: Request, { params }: { params: { token: string, amount: string } }) => {
-    // Extract the token, amount and the account
-    const token = params.token.toUpperCase();
-    const amount = Number(params.amount);
+// POST request
+//export const POST = async (req: Request, { params }: { params: { token: string, amount: string } }) 
+export const POST = async (req: Request) => {
+    const url = new URL(req.url);
+    const pathnameParts = url.pathname.split("/");
+    const token = pathnameParts[pathnameParts.length - 2]?.toUpperCase();
+    const amount = Number(pathnameParts[pathnameParts.length - 1]);
+
+
     const response: ActionPostRequest = await req.json();
+
     const { account } = response;
 
     // Check if API key is set

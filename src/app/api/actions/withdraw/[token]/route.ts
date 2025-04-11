@@ -10,14 +10,15 @@ const headers = {
 };
 
 // OPTIONS request
-export const OPTIONS = async (request: Request) => {
+export const OPTIONS = async () => {
     return new Response(null, { headers });
 };
 
 // GET request
-export const GET = async (req: Request, { params }: { params: { token: string } }) => {
-    // Extract the token
-    const token = params.token.toUpperCase();
+export const GET = async (req: Request) => {
+    const url = new URL(req.url);
+    const pathnameParts = url.pathname.split("/");
+    const token = pathnameParts[pathnameParts.length - 1]?.toUpperCase();
 
     // Check if the token is supported
     if (!token || token !== "USDC") {
