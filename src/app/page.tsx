@@ -15,7 +15,7 @@ const steps = [
       icon: "icon-cog",
     },
     headline: "Blink API",
-    text: "Blinks are headless APIs that return transactions, as well as educational metadata that can be used to render blink UIs. \n\nGet started by editing `/src/app/api/actions/donate-sol/route.ts`",
+    text: "Blinks are headless APIs that return transactions, as well as educational metadata that can be used to render blink UIs. \n\nGet started by editing `/src/app/api/actions/withdraw/usdc/route.ts`",
   },
   {
     icon: "icon-code",
@@ -43,10 +43,24 @@ export default function Home() {
     <main className="grid grid-cols-[2fr_3fr] h-[calc(100vh-64px)]">
       <div className="col-span-1 p-8 pr-16 overflow-y-auto">
         <h1 className="text-[40px] mb-3 font-bold leading-[1]">
-          Solana Blinks Starter Template
+          Lulo Blinks
         </h1>
         <h2 className="text-[18px] mb-2">
-          Use this template project to get started developing your blink.
+          This website showcases Blinks that interact with the Lulo lending protocol on the Solana blockchain.
+          The Blink below lets you withdraw USDC from your Lulo balance.
+          <br /><br />
+          <span className="text-xl mb-2 font-bold">Curious how to build this Blink yourself?</span>
+          <br />
+          Check out our step-by-step {" "}
+          <a
+            href="https://youtu.be/YHANYj0YbLA"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-700 underline"
+          >
+            YouTube tutorial
+          </a>
+          .
         </h2>
         {steps.map((step, i) => (
           <StepCard

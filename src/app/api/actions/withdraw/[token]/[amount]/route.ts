@@ -23,7 +23,6 @@ export const OPTIONS = async () => {
 };
 
 // POST request
-//export const POST = async (req: Request, { params }: { params: { token: string, amount: string } }) 
 export const POST = async (req: Request) => {
     const url = new URL(req.url);
     const pathnameParts = url.pathname.split("/");

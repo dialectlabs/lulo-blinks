@@ -9,12 +9,13 @@ const navBarLinks = [
   {
     logoName: "logo-github",
     text: "View code",
-    href: "https://github.com/dialectlabs/blink-starter-solana",
+    href: "https://github.com/dialectlabs/lulo-blinks/",
   },
+  // TODO: Add guide for documentation once available
   {
     logoName: "logo-frame",
     text: "Guide",
-    href: "https://docs.dialect.to/blinks/blinks-provider/build-your-first-blink",
+    href: "https://youtu.be/YHANYj0YbLA",
   },
   {
     logoName: "logo-readme",
