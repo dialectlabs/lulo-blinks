@@ -1,13 +1,14 @@
-# Lulo Withdraw Blink for Solana
+# Lulo Blinks for Solana
 
-This repository contains a Lulo Withdraw Blink built on Solana. It serves as a practical example of creating a withdrawal functionality for Lulo using the Blink SDKs. 
+This repository contains Lulo Blinks, including withdraw. It serves as a practical example of creating a withdrawal functionality for Lulo using the Blink SDKs. 
 
 It is part of the "Powered by Dialect" series, showcasing how to implement specific functionalities using Dialect's Blink SDKs.
 
 ## Guides & Resources 🔥🔥🔥
 
 Learn how to build this Lulo Withdraw Blink from scratch with our comprehensive tutorial:
-**TBD** (Tutorial coming soon to the Dialect documentation)
+
+[📹 Watch the video](https://youtu.be/YHANYj0YbLA)
 
 Explore our [Blink documentation](https://docs.dialect.to/blinks/blinks-provider/guides) for:
 - Step-by-step tutorials
