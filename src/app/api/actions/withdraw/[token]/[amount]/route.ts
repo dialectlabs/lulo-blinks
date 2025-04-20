@@ -84,6 +84,6 @@ export const POST = async (req: Request) => {
         // Return the payload
         return new Response(JSON.stringify(payload), { headers });
     } catch (error) {
-        return new Response(JSON.stringify({ error: "Failed to process request" }), { status: 500, headers });
+        return new Response(JSON.stringify({ error: (error as Error).message }), { status: 500, headers });
     }
 };

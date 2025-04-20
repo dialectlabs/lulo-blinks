@@ -1,5 +1,5 @@
 import { ActionGetResponse, ACTIONS_CORS_HEADERS, BLOCKCHAIN_IDS } from "@solana/actions";
-import { isSupportedToken, getTokenByTicker } from "@/app/constants/tokens";
+import { isSupportedToken, getTokenByTicker, TOKENS } from "@/app/constants/tokens";
 
 const blockchain = BLOCKCHAIN_IDS.mainnet;
 
@@ -17,55 +17,59 @@ export const OPTIONS = async () => {
 
 // GET request
 export const GET = async (req: Request) => {
-    const url = new URL(req.url);
-    const pathnameParts = url.pathname.split("/");
-    const token = pathnameParts[pathnameParts.length - 1]?.toUpperCase();
+    try {
+        const url = new URL(req.url);
+        const pathnameParts = url.pathname.split("/");
+        const token = pathnameParts[pathnameParts.length - 1]?.toUpperCase();
 
-    // Check if the token is supported
-    if (!token || !isSupportedToken(token)) {
-        return new Response(JSON.stringify({ error: "Unsupported token" }), { status: 400, headers });
-    }
-
-    // Create a payload
-    const payload: ActionGetResponse = {
-        type: "action",
-        label: "Withdraw",
-        title: `Withdraw ${getTokenByTicker(token)?.ticker}`,
-        description: `Withdraw  ${getTokenByTicker(token)?.name} (${getTokenByTicker(token)?.ticker}) from your Lulo balance.`,
-        icon: "https://proxy.dial.to/image?url=https%3A%2F%2Fi.imgur.com%2FYxgeGxl.png",
-        links: {
-            actions: [
-                {
-                    type: "transaction",
-                    label: `100 ${token}`,
-                    href: `/api/actions/withdraw/${token}/100`,
-                },
-                {
-                    type: "transaction",
-                    label: `200 ${token}`,
-                    href: `/api/actions/withdraw/${token}/200`,
-                },
-                {
-                    type: "transaction",
-                    label: `500 ${token}`,
-                    href: `/api/actions/withdraw/${token}/500`,
-                },
-                {
-                    type: "transaction",
-                    label: `${token}`,
-                    href: `/api/actions/withdraw/${token}/{amount}`,
-                    parameters: [
-                        {
-                            name: "amount",
-                            type: "number",
-                            required: true,
-                            label: "Enter the amount to withdraw",
-                        }
-                    ]
-                }
-            ]
+        // Check if the token is supported
+        if (!token || !isSupportedToken(token)) {
+            throw new Error("Unsupported token, please use a supported token: " + Object.keys(TOKENS).join(", "));
         }
-    };
-    // Return the payload
-    return new Response(JSON.stringify(payload), { headers });
+
+        // Create a payload
+        const payload: ActionGetResponse = {
+            type: "action",
+            label: "Withdraw",
+            title: `Withdraw ${getTokenByTicker(token)?.ticker}`,
+            description: `Withdraw  ${getTokenByTicker(token)?.name} (${getTokenByTicker(token)?.ticker}) from your Lulo balance.`,
+            icon: "https://proxy.dial.to/image?url=https%3A%2F%2Fi.imgur.com%2FYxgeGxl.png",
+            links: {
+                actions: [
+                    {
+                        type: "transaction",
+                        label: `100 ${token}`,
+                        href: `/api/actions/withdraw/${token}/100`,
+                    },
+                    {
+                        type: "transaction",
+                        label: `200 ${token}`,
+                        href: `/api/actions/withdraw/${token}/200`,
+                    },
+                    {
+                        type: "transaction",
+                        label: `500 ${token}`,
+                        href: `/api/actions/withdraw/${token}/500`,
+                    },
+                    {
+                        type: "transaction",
+                        label: `${token}`,
+                        href: `/api/actions/withdraw/${token}/{amount}`,
+                        parameters: [
+                            {
+                                name: "amount",
+                                type: "number",
+                                required: true,
+                                label: "Enter the amount to withdraw",
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+        // Return the payload
+        return new Response(JSON.stringify(payload), { headers });
+    } catch (error) {
+        return new Response(JSON.stringify({ error: (error as Error).message }), { status: 500, headers });
+    }
 };
