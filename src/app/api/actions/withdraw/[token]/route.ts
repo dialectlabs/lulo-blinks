@@ -1,4 +1,5 @@
 import { ActionGetResponse, ACTIONS_CORS_HEADERS, BLOCKCHAIN_IDS } from "@solana/actions";
+import { isSupportedToken, getTokenByTicker } from "@/app/constants/tokens";
 
 const blockchain = BLOCKCHAIN_IDS.mainnet;
 
@@ -21,16 +22,16 @@ export const GET = async (req: Request) => {
     const token = pathnameParts[pathnameParts.length - 1]?.toUpperCase();
 
     // Check if the token is supported
-    if (!token || token !== "USDC") {
-        return new Response(JSON.stringify({ error: "Invalid token" }), { status: 400, headers });
+    if (!token || !isSupportedToken(token)) {
+        return new Response(JSON.stringify({ error: "Unsupported token" }), { status: 400, headers });
     }
 
     // Create a payload
     const payload: ActionGetResponse = {
         type: "action",
         label: "Withdraw",
-        title: `Withdraw ${token}`,
-        description: `Withdraw ${token} from your Lulo balance.`,
+        title: `Withdraw ${getTokenByTicker(token)?.ticker}`,
+        description: `Withdraw  ${getTokenByTicker(token)?.name} (${getTokenByTicker(token)?.ticker}) from your Lulo balance.`,
         icon: "https://proxy.dial.to/image?url=https%3A%2F%2Fi.imgur.com%2FYxgeGxl.png",
         links: {
             actions: [
@@ -67,5 +68,4 @@ export const GET = async (req: Request) => {
     };
     // Return the payload
     return new Response(JSON.stringify(payload), { headers });
-
 };
