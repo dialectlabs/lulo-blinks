@@ -44,10 +44,23 @@ export const TOKENS: Record<string, Token> = {
     }
 };
 
-export const isSupportedToken = (ticker: string): boolean => {
-    return Object.keys(TOKENS).includes(ticker.toUpperCase());
+export const isSupportedToken = (input: string): boolean => {
+    // Check if it's a ticker
+    if (Object.keys(TOKENS).includes(input.toUpperCase())) {
+        return true;
+    }
+
+    // Check if it's a mint address
+    return Object.values(TOKENS).some(token => token.mintAddress === input);
 };
 
-export const getTokenByTicker = (ticker: string): Token | undefined => {
-    return TOKENS[ticker.toUpperCase()];
+export const getTokenByInput = (input: string): Token | undefined => {
+    // Try to get token by ticker
+    const tokenByTicker = TOKENS[input.toUpperCase()];
+    if (tokenByTicker) {
+        return tokenByTicker;
+    }
+
+    // Try to get token by mint address
+    return Object.values(TOKENS).find(token => token.mintAddress === input);
 }; 

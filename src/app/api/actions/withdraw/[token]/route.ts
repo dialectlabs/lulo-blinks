@@ -1,5 +1,5 @@
 import { ActionGetResponse, ACTIONS_CORS_HEADERS, BLOCKCHAIN_IDS } from "@solana/actions";
-import { isSupportedToken, getTokenByTicker, TOKENS } from "@/app/constants/tokens";
+import { isSupportedToken, getTokenByInput, TOKENS } from "@/app/constants/tokens";
 
 const blockchain = BLOCKCHAIN_IDS.mainnet;
 
@@ -20,41 +20,45 @@ export const GET = async (req: Request) => {
     try {
         const url = new URL(req.url);
         const pathnameParts = url.pathname.split("/");
-        const token = pathnameParts[pathnameParts.length - 1]?.toUpperCase();
+        const tokenInput = pathnameParts[pathnameParts.length - 1];
 
         // Check if the token is supported
-        if (!token || !isSupportedToken(token)) {
-            throw new Error("Unsupported token, please use a supported token: " + Object.keys(TOKENS).join(", "));
+        if (!isSupportedToken(tokenInput)) {
+            throw new Error("Unsupported token, please use a supported token ticker or mint address. Supported tickers: " + Object.keys(TOKENS).join(", "));
         }
+
+        // Get token data
+        const tokenData = getTokenByInput(tokenInput);
+        const ticker = tokenData!.ticker;
 
         // Create a payload
         const payload: ActionGetResponse = {
             type: "action",
             label: "Withdraw",
-            title: `Withdraw ${getTokenByTicker(token)?.ticker}`,
-            description: `Withdraw  ${getTokenByTicker(token)?.name} (${getTokenByTicker(token)?.ticker}) from your Lulo balance.`,
+            title: `Withdraw ${ticker}`,
+            description: `Withdraw ${tokenData!.name} (${ticker}) from your Lulo balance.`,
             icon: "https://proxy.dial.to/image?url=https%3A%2F%2Fi.imgur.com%2FYxgeGxl.png",
             links: {
                 actions: [
                     {
                         type: "transaction",
-                        label: `100 ${token}`,
-                        href: `/api/actions/withdraw/${token}/100`,
+                        label: `100 ${ticker}`,
+                        href: `/api/actions/withdraw/${ticker}/100`,
                     },
                     {
                         type: "transaction",
-                        label: `200 ${token}`,
-                        href: `/api/actions/withdraw/${token}/200`,
+                        label: `200 ${ticker}`,
+                        href: `/api/actions/withdraw/${ticker}/200`,
                     },
                     {
                         type: "transaction",
-                        label: `500 ${token}`,
-                        href: `/api/actions/withdraw/${token}/500`,
+                        label: `500 ${ticker}`,
+                        href: `/api/actions/withdraw/${ticker}/500`,
                     },
                     {
                         type: "transaction",
-                        label: `${token}`,
-                        href: `/api/actions/withdraw/${token}/{amount}`,
+                        label: `${ticker}`,
+                        href: `/api/actions/withdraw/${ticker}/{amount}`,
                         parameters: [
                             {
                                 name: "amount",

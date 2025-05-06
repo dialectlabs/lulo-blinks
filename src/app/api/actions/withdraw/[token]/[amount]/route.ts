@@ -1,6 +1,6 @@
 import { ActionPostRequest, ActionPostResponse, ACTIONS_CORS_HEADERS, BLOCKCHAIN_IDS } from "@solana/actions";
 import { Connection, VersionedTransaction } from "@solana/web3.js";
-import { getTokenByTicker, isSupportedToken, TOKENS } from "@/app/constants/tokens";
+import { getTokenByInput, isSupportedToken, TOKENS } from "@/app/constants/tokens";
 
 // CAIP-2 
 const blockchain = BLOCKCHAIN_IDS.mainnet;
@@ -28,9 +28,8 @@ export const POST = async (req: Request) => {
     try {
         const url = new URL(req.url);
         const pathnameParts = url.pathname.split("/");
-        const token = pathnameParts[pathnameParts.length - 2]?.toUpperCase();
+        const tokenInput = pathnameParts[pathnameParts.length - 2];
         const amount = Number(pathnameParts[pathnameParts.length - 1]);
-
 
         const response: ActionPostRequest = await req.json();
 
@@ -42,12 +41,12 @@ export const POST = async (req: Request) => {
         }
 
         // Check if token is supported
-        if (!token || !isSupportedToken(token)) {
-            throw new Error("Unsupported token, please use a supported token: " + Object.keys(TOKENS).join(", "));
+        if (!isSupportedToken(tokenInput)) {
+            throw new Error("Unsupported token, please use a supported token ticker or mint address. Supported tickers: " + Object.keys(TOKENS).join(", "));
         }
 
         // Get token data
-        const tokenData = getTokenByTicker(token);
+        const tokenData = getTokenByInput(tokenInput);
 
         // Query Lulo API
         const luloResponse = await fetch(`https://api.flexlend.fi/generate/account/withdraw?priorityFee=50000`, {
